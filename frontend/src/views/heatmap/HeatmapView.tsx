@@ -45,7 +45,7 @@ export default function HeatmapView() {
   const [total, setTotal] = useState(0)
   const [errorMessage, setErrorMessage] = useState('')
   const [filters, setFilters] = useState<Record<string, string>>({})
-  const filterFields = useMemo(() => columns.slice(0, 3), [])
+  const filterFields = useMemo(() => [...columns.slice(0, 3), '聚合级别'], [])
 
   const reload = useCallback(() => {
     setErrorMessage('')

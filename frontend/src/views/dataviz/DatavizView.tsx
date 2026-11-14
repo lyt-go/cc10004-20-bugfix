@@ -12,7 +12,12 @@ const columns = [
   "X轴字段",
   "Y轴字段",
   "配色方案",
-  "刷新间隔"
+  "刷新间隔",
+  "关联热力方案",
+  "聚合级别",
+  "样本覆盖率",
+  "发布号",
+  "发布结论"
 ]
 const actions = [
   "提交配置评审",
@@ -45,7 +50,7 @@ export default function DatavizView() {
   const [total, setTotal] = useState(0)
   const [errorMessage, setErrorMessage] = useState('')
   const [filters, setFilters] = useState<Record<string, string>>({})
-  const filterFields = useMemo(() => columns.slice(0, 3), [])
+  const filterFields = useMemo(() => [...columns.slice(0, 3), '关联热力方案'], [])
 
   const reload = useCallback(() => {
     setErrorMessage('')

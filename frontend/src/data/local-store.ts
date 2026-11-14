@@ -2,7 +2,8 @@ import { SEED_ROWS } from './seed'
 import type { EntryRow } from './types'
 
 // 本地持久化：数据放在 localStorage 里，刷新、关掉再打开都还在。
-const STORAGE_KEY = 'data-product-ops:entries'
+// 结构升级（图表配置新增热力方案引用字段）后版本号 +1，旧键数据不再套用。
+const STORAGE_KEY = 'data-product-ops:entries-v2'
 
 function clone<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T
@@ -38,6 +39,11 @@ export function allRows(): Record<string, EntryRow[]> {
 
 export function listRows(key: string): EntryRow[] {
   return allRows()[key] ?? []
+}
+
+// 动作执行前对齐浏览器里的最新提交：并发发布时以完整校验通过并率先落库的版本为准。
+export function refreshRows(): void {
+  cache = readStorage()
 }
 
 export function saveRows(key: string, rows: EntryRow[]): void {
